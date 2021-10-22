@@ -10,4 +10,6 @@ public interface EmployeeService {
     Optional<EmployeeDto> getCoachBroken(Long id);
 
     Optional<EmployeeDto> getCoachFixed(Long id);
+
+    EmployeeDto save(EmployeeDto employee);
 }

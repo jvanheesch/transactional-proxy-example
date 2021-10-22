@@ -41,4 +41,14 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Optional<EmployeeDto> getCoachFixed(Long id) {
         return employeeService.getCoachWithTransactional(id);
     }
+
+    @Transactional
+    @Override
+    public EmployeeDto save(EmployeeDto dto) {
+        Employee employee = new Employee();
+        employee.setId(dto.getMyId());
+        employee.setName(dto.getName());
+        Employee saved = employeeRepository.save(employee);
+        return new EmployeeDto(saved.getId(), saved.getName());
+    }
 }
