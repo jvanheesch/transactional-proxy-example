@@ -55,6 +55,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         return new EmployeeDto(saved.getId(), saved.getName());
     }
 
+    @Transactional
     @Override
     public void testTransactionalityAmq() {
         jmsTemplate.send("opdrachtenMailbox.queue", session -> session.createTextMessage("test transactionality"));
