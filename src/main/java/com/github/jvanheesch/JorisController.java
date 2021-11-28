@@ -13,9 +13,11 @@ import javax.jms.TextMessage;
 @RestController
 public class JorisController {
     private final JmsTemplate jmsTemplate;
+    private final EmployeeService employeeService;
 
-    public JorisController(JmsTemplate jmsTemplate) {
+    public JorisController(JmsTemplate jmsTemplate, EmployeeService employeeService) {
         this.jmsTemplate = jmsTemplate;
+        this.employeeService = employeeService;
     }
 
     @GetMapping
@@ -40,5 +42,10 @@ public class JorisController {
                 return msg;
             }
         });
+    }
+
+    @GetMapping("/transactional")
+    public void testTransactionality() {
+        employeeService.testTransactionalityAmq();
     }
 }

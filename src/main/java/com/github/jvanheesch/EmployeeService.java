@@ -12,4 +12,6 @@ public interface EmployeeService {
     Optional<EmployeeDto> getCoachFixed(Long id);
 
     EmployeeDto save(EmployeeDto employee);
+
+    void testTransactionalityAmq();
 }

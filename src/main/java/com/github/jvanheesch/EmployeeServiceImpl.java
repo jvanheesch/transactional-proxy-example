@@ -1,6 +1,7 @@
 package com.github.jvanheesch;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -9,12 +10,14 @@ import java.util.Optional;
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
     private final EmployeeRepository employeeRepository;
+    private final JmsTemplate jmsTemplate;
 
     @Autowired
     private EmployeeService employeeService;
 
-    public EmployeeServiceImpl(EmployeeRepository employeeRepository) {
+    public EmployeeServiceImpl(EmployeeRepository employeeRepository, JmsTemplate jmsTemplate) {
         this.employeeRepository = employeeRepository;
+        this.jmsTemplate = jmsTemplate;
     }
 
     @Override
@@ -50,5 +53,11 @@ public class EmployeeServiceImpl implements EmployeeService {
         employee.setName(dto.getName());
         Employee saved = employeeRepository.save(employee);
         return new EmployeeDto(saved.getId(), saved.getName());
+    }
+
+    @Override
+    public void testTransactionalityAmq() {
+        jmsTemplate.send("opdrachtenMailbox.queue", session -> session.createTextMessage("test transactionality"));
+        throw new RuntimeException();
     }
 }
