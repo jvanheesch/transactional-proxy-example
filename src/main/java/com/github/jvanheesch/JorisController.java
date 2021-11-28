@@ -30,5 +30,15 @@ public class JorisController {
                 return msg;
             }
         });
+        jmsTemplate.send("smp.sluitendmaatpak.topic", new MessageCreator() {
+            @Override
+            public Message createMessage(Session session) throws JMSException {
+                TextMessage msg = session.createTextMessage("event sent from transactional proxy app");
+//                msg.setStringProperty("type", type);
+//                msg.setStringProperty("operation", operation);
+//                msg.setStringProperty("identifier", identifier);
+                return msg;
+            }
+        });
     }
 }
