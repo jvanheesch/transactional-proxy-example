@@ -57,8 +57,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Transactional
     @Override
-    public void testTransactionalityAmq() {
+    public void testTransactionalityAmq(boolean crash) {
         jmsTemplate.send("opdrachtenMailbox.queue", session -> session.createTextMessage("test transactionality"));
-        throw new RuntimeException();
+        if (crash) {
+            throw new RuntimeException();
+        }
     }
 }

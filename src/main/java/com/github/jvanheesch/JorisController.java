@@ -3,6 +3,7 @@ package com.github.jvanheesch;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.core.MessageCreator;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.jms.JMSException;
@@ -45,7 +46,7 @@ public class JorisController {
     }
 
     @GetMapping("/transactional")
-    public void testTransactionality() {
-        employeeService.testTransactionalityAmq();
+    public void testTransactionality(@RequestParam boolean crash) {
+        employeeService.testTransactionalityAmq(crash);
     }
 }
